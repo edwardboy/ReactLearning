@@ -1,6 +1,7 @@
-import React,{Component,Fragment} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import ServiceItem from "./ServiceItem";
 
 // function App() {
 //   return (
@@ -24,39 +25,40 @@ import './App.css';
 // }
 
 class App extends Component {
-
   state = {
-    inputValue:'',
-    contents:["头部按摩","精油推背"]
-  }
+    inputValue: "",
+    contents: ["头部按摩", "精油推背"]
+  };
 
-  inputChange(e){
+  inputChange(e) {
     // console.log(e.target.value);
     this.setState({
-      inputValue:e.target.value
-    })
+      inputValue: e.target.value
+    });
   }
 
-  addService(){
-    if(this.state.inputValue){
+  addService() {
+    if (this.state.inputValue) {
       this.setState({
-        contents:[...this.state.contents, this.state.inputValue],
+        contents: [...this.state.contents, this.state.inputValue],
         // this.state.contents.concat(this.state.inputValue),
-        inputValue:''
-      })
+        inputValue: ""
+      });
     }
   }
 
-  removeService(index){
-    let editContents = this.state.contents
+  removeService(index) {
+    let editContents = this.state.contents;
     // let index = editContents.indexOf(item)
     editContents.splice(index, 1);
-    this.setState({
-      contents:editContents
-    },()=>{
-      console.log(this.state.contents);
-    })
-    
+    this.setState(
+      {
+        contents: editContents
+      },
+      () => {
+        console.log(this.state.contents);
+      }
+    );
   }
 
   render() {
@@ -64,18 +66,27 @@ class App extends Component {
       <Fragment>
         <div>
           <label htmlFor="jspang">加入服务：</label>
-          <input value={this.state.inputValue} onChange={(e)=>this.inputChange(e)} /> 
-          <button onClick={()=>this.addService()}> 增加服务 </button> 
+          <input
+            value={this.state.inputValue}
+            onChange={e => this.inputChange(e)}
+          />
+          <button onClick={() => this.addService()}> 增加服务 </button>
         </div>
         <ul>
-          {
-            this.state.contents.map((item,index)=>{
-              return <li onClick={()=>this.removeService(index)} key={index}>{item}</li>
-            })
-          }
+          {this.state.contents.map((item, index) => {
+            return (
+              <ServiceItem
+                index={index}
+                key={index}
+                content={item}
+                onclick={ind => this.removeService(ind)}
+              />
+            );
+            // <li onClick={()=>this.removeService(index)} key={index}>{item}</li>
+          })}
         </ul>
       </Fragment>
-    )
+    );
   }
 }
 
