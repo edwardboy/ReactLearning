@@ -1,4 +1,5 @@
 import React, { Component, createContext } from "react";
+import "./Header.css";
 
 let DataContext = createContext({
   themeColor: "#3EC7B6",
@@ -27,13 +28,20 @@ class Header extends Component {
     let currentThemeColor =
       themeColors[currentThemeColorIndex % themeColors.length];
     let currentLang = langs[currentThemeColorIndex % themeColors.length];
-    console.log("currentThemeColor:" + currentThemeColor);
 
     return (
-      <div>
+      <div className="header">
         <p style={{ color: currentThemeColor }}>
           {"头部视图" + "-" + currentLang}
         </p>
+
+        <Provider value={{ themeColor: currentThemeColor, lang: currentLang }}>
+          <RecycleView />
+        </Provider>
+
+        <Provider value={{ themeColor: currentThemeColor, lang: currentLang }}>
+          <Demo />
+        </Provider>
 
         <Provider value={{ themeColor: currentThemeColor, lang: currentLang }}>
           <div
@@ -42,14 +50,6 @@ class Header extends Component {
           >
             {"切换主题"}
           </div>
-        </Provider>
-
-        <Provider value={{ themeColor: currentThemeColor, lang: currentLang }}>
-          <RecycleView />
-        </Provider>
-
-        <Provider value={{ themeColor: currentThemeColor, lang: currentLang }}>
-          <Demo />
         </Provider>
       </div>
     );
